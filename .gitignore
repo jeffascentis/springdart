@@ -1,0 +1,15 @@
+#java specific
+*.class
+
+#netbeans ignore personal stuff 
+.idea
+
+src/main/resources/project.properties
+
+## generic files to ignore
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+
