@@ -5,18 +5,10 @@ packages:
     description: browser
     source: hosted
     version: "0.9.1"
-  collection:
-    description: collection
-    source: hosted
-    version: "0.9.0"
   js:
     description: js
     source: hosted
     version: "0.2.1"
-  logging:
-    description: logging
-    source: hosted
-    version: "0.9.1+1"
   path:
     description: path
     source: hosted
@@ -25,13 +17,6 @@ packages:
     description: quiver
     source: hosted
     version: "0.17.0"
-  sockjs_client:
-    description:
-      ref: null
-      resolved-ref: "7722e6000b3fea1a089364f5c002218f42e29be8"
-      url: "git://github.com/nelsonsilva/sockjs-dart-client.git"
-    source: git
-    version: "0.2.0"
   stack_trace:
     description: stack_trace
     source: hosted

@@ -1,49 +1,16 @@
 import 'dart:html';
 
 import 'package:stomp/stomp.dart';
-import 'package:logging/logging.dart';
 import "package:stomp/websocket.dart" show connect;
-import "package:sockjs_client/sockjs.dart" as SockJS;
 
 StompClient _stompClient;
+DivElement logDiv;
 
 void main() {
-  DivElement loggingDiv = querySelector("#output")
+  logDiv = querySelector("#output");
+  logDiv
     ..text = "Dart is running";
-  
-  _log(LogRecord l) {
-    loggingDiv
-    ..append(new Element.html("<code/>")..text = "${l.message}")
-    ..append(new Element.html("<br>"))
-    ..scrollTop += 10000;
-  }
-  
-// Setup Logging
-  Logger.root.level = Level.INFO;
-  Logger.root.onRecord.listen(_log);
 
-  final LOG = new Logger("sockjs");
-
-  LOG.info("Starting");
-  var sockjsUrl = 'http://localhost:8080/gs/ws/';
-  
-                                            /** This protocolsWhitelist bit is pretty cool - CM **/
-  var sockjs = new SockJS.Client( sockjsUrl, protocolsWhitelist:['websocket', 'xhr-streaming'], debug: true);
-
-  sockjs.onOpen.listen( (_) => LOG.info('[*] open ${sockjs.protocol}') );
-  sockjs.onMessage.listen( (e) => LOG.info('[.] message ${e.data}') );
-  sockjs.onClose.listen( (_) => LOG.info('[*] close') );
-
-  inp.onKeyUp.listen( (KeyboardEvent e) {
-    if (e.keyCode == 13) {
-      LOG.info('[ ] sending ${inp.value}');
-      sockjs.send(inp.value);
-      inp.value = '';
-    }
-  });
-
-  
-  
   /**
    * Changed ws://localhost:8080/gs/ws/
    * to ws://localhost:8080/gs/ws/websocket
@@ -74,7 +41,7 @@ void loadEmployee(MouseEvent evt) {
    * pubspec to use the git lib.
    * 
    * Logged with author:
-   *  https://github.com/rikulo/stomp/issues/6
+   * https://github.com/rikulo/stomp/issues/6
    * 
    * Patched to send proper application/json header.
    * 
@@ -88,7 +55,9 @@ void loadEmployee(MouseEvent evt) {
 }
 
 void printEmployeesTopicResponses(headers, message) {
-  print("Received $message");    
+  print("Received $message"); 
+  logDiv
+    ..text = "Received $message";
 }
 
 //class EmployeeCrudHandler {
