@@ -1,0 +1,10 @@
+name: spring
+description: A sample web application
+dependencies:
+  browser: any
+  js: any
+  sockjs_client:
+    git: git://github.com/nelsonsilva/sockjs-dart-client.git
+  stomp: 
+    git: git://github.com/revelfire/stomp.git
+  
