@@ -7,14 +7,21 @@
     <script type="text/javascript">
         var stompClient = null;
 //        WebSocket = undefined;
-        var _socket = new SockJS('/ws');
+        var _socket = new SockJS('/gs/ws');
         stompClient = Stomp.over(_socket);
         stompClient.connect('', '', function(frame) {
             setConnected(true);
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/employees', function(greeting){
                 showEmployeeResponse(JSON.parse(greeting.body));
+                console.log(greeting);
             });
+            
+            stompClient.subscribe("/user/queue/errors", function(greeting){
+                showEmployeeResponse(greeting.body);
+                console.log(greeting);
+             });
+
         });
 
         function setConnected(connected) {
@@ -55,6 +62,7 @@
         <!--<button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>-->
     <!--</div>-->
     <div id="conversationDiv">
+        Enter a non-number to see exception<br />
         <label>ID?</label><input type="text" id="empId" />
         <button id="load" onclick="loadEmployee();">Send</button>
         <p id="response"></p>

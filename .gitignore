@@ -13,3 +13,10 @@ src/main/resources/project.properties
 *.swp
 *.out
 
+# Dart
+packages
+pubspec.lock
+*.dart.js
+
+*.js.deps
+*.js.map

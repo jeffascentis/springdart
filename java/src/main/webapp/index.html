@@ -15,14 +15,26 @@
         }
         
         function connect() {
-            var socket = new SockJS('/ws');
+            var socket = new SockJS('/gs/ws');
             stompClient = Stomp.over(socket);            
             stompClient.connect('', '', function(frame) {
+                console.log("Frame on connect " + frame.headers['queue-suffix']);
                 setConnected(true);
                 console.log('Connected: ' + frame);
-                stompClient.subscribe('/topic/greetings', function(greeting){
+                stompClient.subscribe("/topic/greetings", function(greeting){
                     showGreeting(JSON.parse(greeting.body).content);
                 });
+                
+                stompClient.subscribe("/user/queue/greetings-updates", function(greeting){
+                    showGreeting(greeting.body);
+                    console.log(greeting);
+                });
+
+                stompClient.subscribe("/user/queue/errors", function(greeting){
+                    showGreeting(greeting.body);
+                    console.log(greeting);
+                });
+                
             });
         }
         
@@ -32,11 +44,16 @@
             console.log("Disconnected");
         }
         
+        function sendNameAll() {
+            var name = document.getElementById('name').value;
+            stompClient.send("/app/hello-all", {}, JSON.stringify({ 'name': name }));
+        }
+        
         function sendName() {
             var name = document.getElementById('name').value;
             stompClient.send("/app/hello", {}, JSON.stringify({ 'name': name }));
         }
-        
+
         function showGreeting(message) {
             var response = document.getElementById('response');
             var p = document.createElement('p');
@@ -57,6 +74,8 @@
     <div id="conversationDiv">
         <label>What is your name?</label><input type="text" id="name" />
         <button id="sendName" onclick="sendName();">Send</button>
+        <button id="sendNameAll" onclick="sendNameAll();">Send to All</button><br />
+        (to see error handling, leave name blank)
         <p id="response"></p>
     </div>
 </div>

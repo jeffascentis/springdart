@@ -51,10 +51,10 @@ public class WebApplicationInitty implements WebApplicationInitializer {
          * "The container will execute the filters in the order in
          which they are defined."
          */
-//        container.addFilter(
-//                "springSecurityFilterChain",
-//                new DelegatingFilterProxy("springSecurityFilterChain"))
-//                .addMappingForUrlPatterns(null, false, "/*");
+        container.addFilter(
+                "springSecurityFilterChain",
+                new DelegatingFilterProxy("springSecurityFilterChain"))
+                .addMappingForUrlPatterns(null, false, "/*");
 
 
         // Create the dispatcher servlet's Spring application context
